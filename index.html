@@ -131,27 +131,16 @@
     		</div>
     	</div>
     </section>
-
+ class="input-field"
     <section class="s2">
     	<div class="main-container">
     		<h3 style="text-align: center;">Get In Touch</h3>
-		<form id="contact-form" method="post" action="contactform.php">
-		    <fieldset>
-                    <input class="input-field" placeholder="Full Name" type="text" name="name" tabindex="1" required autofocus>
-                    </fieldset>
-                    <fieldset>
-                    <input class="input-field" placeholder="Email Address" type="email" name="email" tabindex="2" required>
-                    </fieldset>
-                    <fieldset>
-                    <input class="input-field" placeholder="Subject" type="text" name="subject" tabindex="3" required>
-                    </fieldset>
-   
-                    <fieldset>
-                    <textarea class="input-field" placeholder="Type your Message Here...." name="message" tabindex="5" required></textarea>
-                    </fieldset>
-                    <fieldset>
-                    <button class="input-field" name="submit" type="submit" id="contact-submit" data-submit="...Sending">Submit</button>
-	            </fieldset>
+		<form id="contact-form" method="POST" action="https://formspree.io/nikolopoulosvangelis@gmail.com">
+		    Name: <input  class="input-field" type="text" name="Name" placeholder="Your name">
+		    Email: <input class="input-field" type="email" name="_replyto" placeholder="Your Email">
+		    Message: <textarea  class="input-field" name="message" placeholder="Type your message"></textarea>
+		    <input  class="input-field" type="submit" value="Send">
+		   <input  class="input-field" type="hidden" name="_subject" value="Enter your subject here">
                </form>	
     	</div>
     </section>
