@@ -136,19 +136,16 @@
     	<div class="main-container">
     		<h3 style="text-align: center;">Get In Touch</h3>
 
-    		<form id="contact-form" action="contactform.php" method="post">
+    		<form id="contact-form" action="contactform.php" method="POST">
     			<label>Name</label>
-    			<input class="input-field" type="text" name="Name" placeholder="Full Name" required>
+    			<input class="input-field" type="text" name="name" placeholder="Full Name">
     			<label>Subject</label>
-    			<input class="input-field" type="text" name="Subject" placeholder="Subject" required>
+    			<input class="input-field" type="text" name="subject" placeholder="Subject">
     			<label>Email</label>
-    			<input class="input-field" type="text" name="Email" placeholder="Your E-mail" required>
+    			<input class="input-field" type="text" name="email" placeholder="Your E-mail">
     			<label>Message</label>
-    			<textarea class="input-field" name="Message" placeholder="Message" required></textarea>
-
-    			
-
-    			<button id="submit-btn" type="submit" name="submit">Send</button>
+			<textarea class="input-field" name="message" placeholder="Message"></textarea><br />
+    			<input id="submit-btn" type="submit" value="Send" name="submit"><input type="reset" value="Clear">
     		</form>  		
     	</div>
     </section>
