@@ -310,9 +310,12 @@ h6 {font-size: 16px;}
 	background-color: var(--buttoncolor);
 	border: none;
 }
-.post-preview{
-	background-color: #fff;
-	padding: 50px;
+.post-preview {
+    backgroundcolor: #fff
+    min-height: 150px;  /* Adjust the value to suit your design */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 .post-title{
 	color:black;
