@@ -272,9 +272,10 @@ h6 {font-size: 16px;}
     flex-wrap: wrap; /* Allows items to wrap to the next line if not enough space */
 }
 .thumbnail {
-    height: 200px; /* Adjust based on your preference */
-    width: 100%; /* This will maintain the aspect ratio */
+    width: 100%; /* This will make the image width responsive to the container size */
+    height: auto; /* This will maintain the aspect ratio of the image */
     object-fit: cover; /* This will cover the area without stretching the image */
+    max-height: 200px; /* Setting a max height to make images appear the same size */
 }
 .post {
     width: calc(50% - 20px); /* Adjust width minus margin for two items per row */
@@ -312,7 +313,7 @@ h6 {font-size: 16px;}
 	border: none;
 }
 .post-preview {
-    backgroundcolor: #FFFFFF;
+    background-color: #fff;
     min-height: 150px;  /* Adjust the value to suit your design */
     display: flex;
     flex-direction: column;
