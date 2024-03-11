@@ -268,8 +268,8 @@ h6 {font-size: 16px;}
 }
 .post-wrapper {
     display: flex;
-    justify-content: space-around; /* Adjust this to control the space between posts */
-    flex-wrap: wrap; /* Allows items to wrap to the next line if not enough space */
+    justify-content: space-around; /* This will space out the .post elements evenly */
+    flex-wrap: wrap; /* Allows wrapping onto the next line if container width is not enough */
 }
 
 .thumbnail {
@@ -278,11 +278,11 @@ h6 {font-size: 16px;}
 }
 
 .post {
-    width: calc(50% - 20px); /* Adjust width minus margin for two items per row */
-    margin: 10px; /* Spacing between posts */
-    padding: 10px; /* Padding to create space between the content and the border */
+    flex: 1; /* Allows the post to grow */
+    margin: 10px; /* Adds space between the posts */
+    max-width: 45%; /* Maximum width of each post to ensure they don't get too wide */
     background-color: var(--borderColor); /* Set background color */
-    box-sizing: border-box;
+    
 }
 #contact-form{
 	display: block;
