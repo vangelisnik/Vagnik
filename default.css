@@ -275,6 +275,8 @@ h6 {font-size: 16px;}
     width: auto; /* Allows the image to maintain original width */
     height: 200px; /* Fixed height for all images */
     object-fit: contain; /* Ensures the entire image is shown, may add space around the image */
+    display: block; /* Ensures images are displayed as block elements */
+    margin: 0 auto; /* Centers the images horizontally */
 }
 .post {
     width: calc(50% - 20px); /* Adjust width minus margin for two items per row */
@@ -312,11 +314,9 @@ h6 {font-size: 16px;}
 	border: none;
 }
 .post-preview {
-    background-color: #fff;
-    min-height: 150px;  /* Adjust the value to suit your design */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    background-color: #fff; /* White background */
+    padding: 15px; /* Add padding to separate text from the container edges */
+    text-align: center; /* Center-align text within the container */
 }
 .post-title{
 	color:black;
