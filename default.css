@@ -268,18 +268,18 @@ h6 {font-size: 16px;}
 }
 .post-wrapper {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around; /* Adjust this to control the space between posts */
+    flex-wrap: wrap; /* Allows items to wrap to the next line if not enough space */
 }
 
 .thumbnail {
-    width: 100%; /* Make the image container fill its parent */
-    height: auto; /* Ensure the aspect ratio is maintained */
-    display: block; /* Remove any default inline display */
+    width: 100%; /* Makes the image responsive */
+    height: auto;
 }
 
 .post {
-    flex: 1;
-    margin: 0 5px;
+    width: calc(50% - 20px); /* Adjust width minus margin for two items per row */
+    margin: 10px; /* Spacing between posts */
 }
 #contact-form{
 	display: block;
