@@ -273,7 +273,8 @@ h6 {font-size: 16px;}
 }
 .thumbnail {
     width: 100%; /* Makes the image responsive */
-    height: auto;
+    height: 200px; /* Set a fixed height for all thumbnails */
+    object-fit: cover; /* Ensures the image covers the area nicely */
 }
 .post {
     width: calc(50% - 20px); /* Adjust width minus margin for two items per row */
@@ -311,7 +312,7 @@ h6 {font-size: 16px;}
 	border: none;
 }
 .post-preview {
-    backgroundcolor: #fff
+    backgroundcolor: #ffffff
     min-height: 150px;  /* Adjust the value to suit your design */
     display: flex;
     flex-direction: column;
