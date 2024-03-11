@@ -267,24 +267,19 @@ h6 {font-size: 16px;}
 	text-align: center;
 }
 .post-wrapper {
-    background-color: #fff;
     display: flex;
     justify-content: space-between;
-    margin: 0 -10px; /* Add negative margin to compensate for individual post margins */
 }
 
 .thumbnail {
-    width: 100%;
-    max-height: 200px;
-    object-fit: cover; /* Ensure the image covers the container */
+    width: 100%; /* Make the image container fill its parent */
+    height: auto; /* Ensure the aspect ratio is maintained */
+    display: block; /* Remove any default inline display */
 }
 
 .post {
     flex: 1;
-    margin: 0 10px; /* Add margin to create space between the projects */
-    display: flex;
-    flex-direction: column;
-    height: 100%;
+    margin: 0 5px;
 }
 #contact-form{
 	display: block;
