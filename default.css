@@ -267,20 +267,19 @@ h6 {font-size: 16px;}
 	text-align: center;
 }
 .post-wrapper {
+    background-color: #fff;
     display: flex;
-    justify-content: space-around; /* Adjust this to control the space between posts */
-    flex-wrap: wrap; /* Allows items to wrap to the next line if not enough space */
+    justify-content: space-between;
 }
+
 .thumbnail {
-    width: auto; /* Allows the image to maintain original width */
-    height: 200px; /* Fixed height for all images */
-    object-fit: contain; /* Ensures the entire image is shown, may add space around the image */
-    display: block; /* Ensures images are displayed as block elements */
-    margin: 0 auto; /* Centers the images horizontally */
+    width: 100%; /* Make the image container fill its parent */
+    height: auto; /* Ensure the aspect ratio is maintained */
+    display: block; /* Remove any default inline display */
 }
 .post {
-    width: calc(50% - 20px); /* Adjust width minus margin for two items per row */
-    margin: 10px; /* Spacing between posts */
+    flex: 1;
+    margin: 0 5px;
 }
 #contact-form{
 	display: block;
