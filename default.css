@@ -279,6 +279,7 @@ h6 {font-size: 16px;}
 .post {
     width: calc(50% - 20px); /* Adjust width minus margin for two items per row */
     margin: 10px; /* Spacing between posts */
+    background-color: #fff;
 }
 
 #contact-form{
