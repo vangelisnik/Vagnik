@@ -268,9 +268,11 @@ h6 {font-size: 16px;}
 }
 .post-wrapper {
     display: flex;
-    justify-content: space-around; /* This will space out the .post elements evenly */
-    flex-wrap: wrap; /* Allows wrapping onto the next line if container width is not enough */
+    flex-wrap: wrap;
+    justify-content: space-between; /* Align posts evenly */
+    margin: -10px; /* Counteract margin from individual posts */
 }
+
 
 .thumbnail {
     width: 100%; /* Makes the image responsive */
@@ -280,7 +282,7 @@ h6 {font-size: 16px;}
 .post {
     width: calc(50% - 20px); /* Adjust width minus margin for two items per row */
     margin: 10px; /* Spacing between posts */
-    background-color: var(--borderColor); /* Set background color */
+    background-color: var(--mainColor); /* Set background color */
     display: flex; /* Use flexbox for layout */
     flex-direction: column; /* Stack image and text vertically */
     align-items: center; /* Center items horizontally */
@@ -320,7 +322,6 @@ h6 {font-size: 16px;}
     background-color: #fff; /* White background */
     padding: 15px;
     text-align: center;
-    flex: 1; /* Allow text to expand to fill remaining space */
     width: 100%; /* Ensure text fills the entire width */
     box-sizing: border-box; /* Include padding in width calculation */
 }
