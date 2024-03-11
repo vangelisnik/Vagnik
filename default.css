@@ -313,15 +313,10 @@ h6 {font-size: 16px;}
 	border: none;
 }
 .post-preview {
-    background-color: #fff;
-    padding: 15px;
-    text-align: center;
-    width: 100%;
-    box-sizing: border-box;
-    flex-grow: 1;
-    display: flex; /* Apply flexbox */
-    flex-direction: column; /* Stack items vertically */
-    justify-content: center; /* Vertically center items */
+    min-height: 150px;  /* Adjust the value to suit your design */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 .post-title{
 	color:black;
@@ -331,9 +326,6 @@ h6 {font-size: 16px;}
 .post-intro {
     color: #4b5156;
     font-size: 14px;
-    line-height: 1.5; /* Set line height for better readability */
-    margin: 0; /* Reset margin */
-    visibility: visible; /* Ensure visibility */
 }
 
 @media (max-width: 768px) { /* Adjusts layout for smaller screens */
