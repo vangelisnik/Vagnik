@@ -278,11 +278,12 @@ h6 {font-size: 16px;}
 }
 
 .post {
-    flex: 1; /* Allows the post to grow */
-    margin: 10px; /* Adds space between the posts */
-    max-width: 45%; /* Maximum width of each post to ensure they don't get too wide */
+    width: calc(50% - 20px); /* Adjust width minus margin for two items per row */
+    margin: 10px; /* Spacing between posts */
     background-color: var(--borderColor); /* Set background color */
-    
+    display: flex; /* Use flexbox for layout */
+    flex-direction: column; /* Stack image and text vertically */
+    align-items: center; /* Center items horizontally */
 }
 #contact-form{
 	display: block;
@@ -316,11 +317,12 @@ h6 {font-size: 16px;}
 	border: none;
 }
 .post-preview {
-    background-color: #fff;
+    background-color: #fff; /* White background */
     padding: 15px;
     text-align: center;
-    flex: 1; 
-    margin-top: 10px; /* Add margin to separate the post preview from the thumbnail */
+    flex: 1; /* Allow text to expand to fill remaining space */
+    width: 100%; /* Ensure text fills the entire width */
+    box-sizing: border-box; /* Include padding in width calculation */
 }
 .post-title{
 	color:black;
