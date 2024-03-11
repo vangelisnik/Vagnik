@@ -268,17 +268,15 @@ h6 {font-size: 16px;}
 }
 .post-wrapper {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between; /* Align posts evenly */
+    justify-content: space-around; /* Adjust this to control the space between posts */
+    flex-wrap: wrap; /* Allows items to wrap to the next line if not enough space */
     margin: -10px; /* Counteract margin from individual posts */
 }
 
 
 .thumbnail {
     width: 100%; /* Makes the image responsive */
-    height: auto; /* Maintain aspect ratio */
-    max-height: 50%; /* Limit image height to half of the post height */
-    object-fit: cover; /* Maintain aspect ratio and cover the container */
+    height: auto;
 }
 
 .post {
@@ -289,7 +287,7 @@ h6 {font-size: 16px;}
     flex-direction: column; /* Stack image and text vertically */
     align-items: center; /* Center items horizontally */
     justify-content: space-between; /* Distribute space evenly between items */
-    height: 400px; /* Set a fixed height for the post */
+    height: 300px; /* Set a fixed height for the post */
 }
 #contact-form{
 	display: block;
