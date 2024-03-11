@@ -268,19 +268,16 @@ h6 {font-size: 16px;}
 }
 .post-wrapper {
     display: flex;
-    justify-content: space-between; /* Adjusted to space-between for clearer spacing */
-    align-items: flex-start; /* Aligns items at the start of the flex container */
-    flex-wrap: nowrap; /* Prevent wrapping */
+    justify-content: space-around; /* Adjust this to control the space between posts */
+    flex-wrap: wrap; /* Allows items to wrap to the next line if not enough space */
 }
-.thumbnail{
-	display: block;
-	width: 100%;
-	height:180px;
-	object-fit: fill;
+.thumbnail {
+    width: 100%; /* Makes the image responsive */
+    height: auto;
 }
 .post {
-    flex-basis: 48%; /* Sets a base width for each post; adjust this value if needed */
-    margin: 5px; /* Adds a slight margin for spacing; adjust as needed */
+    width: calc(50% - 20px); /* Adjust width minus margin for two items per row */
+    margin: 10px; /* Spacing between posts */
 }
 #contact-form{
 	display: block;
@@ -325,6 +322,11 @@ h6 {font-size: 16px;}
 .post-intro{
 	color:#4b5156;
 	font-size: 14px;
+}
+@media (max-width: 768px) { /* Adjusts layout for smaller screens */
+    .post {
+        width: 100%; /* Full width for small screens */
+    }
 }
 
 #skills{
