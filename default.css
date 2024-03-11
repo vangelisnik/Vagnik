@@ -315,6 +315,7 @@ h6 {font-size: 16px;}
 .post-preview {
     min-height: 150px;  /* Adjust the value to suit your design */
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
 }
 .post-title{
