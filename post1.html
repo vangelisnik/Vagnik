@@ -59,7 +59,7 @@ Damaged commercial building</p>
     <p>This section describes the key components of our project's codebase, detailing the purpose and functionality of each script.</p>
   <h3>DataChallenge.py</h3>
     <p>Covers various preprocessing steps such as loading geotiff images, visualizing different bands, generating image tiles, and converting these tiles into JPEG format for easier processing.</p>
-    <p># Supress Warnings
+    <pre># Supress Warnings
 import warnings
 warnings.filterwarnings('ignore')
 
@@ -242,10 +242,10 @@ def rename_files(directory_path):
     print("Files renamed successfully.")
 
 output_dir = "/Post_Event_Grids_In_JPEG"
-rename_files(output_dir)</p>
-  <h3>rename.py</h3>
+rename_files(output_dir)</pre>
+  <h3>Rename.py</h3>
     <p>A utility script designed to rename image files systematically. It's used to prepare our dataset by giving consistent naming conventions to our pre-event satellite images.</p>
-    <p>import os
+    <pre>import os
 def rename_files(directory_path):
 # Define the directory path where your files are located
     directory_path = directory_path
@@ -281,9 +281,9 @@ def rename_files(directory_path):
             number += 1
     
     print("Files renamed successfully.")
-output_dir = "e/Pre_Event_Grids_In_JPEG"
+output_dir = "/Pre_Event_Grids_In_JPEG"
 rename_files(output_dir)
-</p>
+</pre>
   <section>
     <h2>Image Labeling Process</h2>
     <p>Following the preparation and analysis of satellite images through various processing steps as outlined in <code>DataChallenge.py</code>, the next crucial step involved meticulously labeling the images to train our machine learning model effectively. This process was essential for distinguishing between damaged and undamaged residential and commercial buildings in the aftermath of Hurricane Maria.</p>
@@ -315,7 +315,7 @@ rename_files(output_dir)
         <li>Ensure compatibility with YOLO's data structure requirements.</li>
         <li>Output a structured dataset.yaml file containing paths to training and validation data, class names, and other relevant information.</li>
     </ul>
-  <p>import os
+  <pre>import os
 import yaml
 
 # Ορίζουμε τον φάκελο με τα δεδομένα
@@ -363,7 +363,7 @@ for subset in existing_dataset.keys():
 # Αποθηκεύουμε τα ενημερωμένα δεδομένα στο YAML αρχείο
 with open(existing_dataset_path, 'w') as yaml_file:
     yaml.dump(existing_dataset, yaml_file, default_flow_style=False)
-</p>
+</pre>
 </div>
   <h2>Optimizing Model Training</h2>
 <p>To effectively train the machine learning model while mitigating the risk of overfitting, the decision was made to utilize YOLOv8 Nano. This choice was informed by the need for a lightweight model that could still deliver the necessary predictive performance without the extensive computational requirements of larger pre-trained models. YOLOv8 Nano, known for its efficiency and speed, proved to be an optimal choice for this project's specific constraints and objectives.</p>
