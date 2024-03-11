@@ -320,7 +320,8 @@ h6 {font-size: 16px;}
 }
 .post-preview {
     background-color: #fff; /* White background */
-    padding: 15px;
+    padding: 0; /* Remove padding */
+    margin: 0; /* Remove margin */
     text-align: center;
     width: 100%; /* Ensure text fills the entire width */
     box-sizing: border-box; /* Include padding in width calculation */
