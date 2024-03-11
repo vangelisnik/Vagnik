@@ -276,11 +276,12 @@ h6 {font-size: 16px;}
     flex: 1; /* Fill the available height */
     width: auto; /* Ensure the aspect ratio is maintained */
     max-width: 100%; /* Limit the width to prevent overflow */
+    max-height: 200px; /* Set a maximum height for the image */
 }
 
 .post {
     flex: 1;
-    margin: 0 5px;
+     margin: 0 10px;
     display: flex; /* Add flex display */
     flex-direction: column; /* Arrange child elements vertically */
     height: 100%; /* Set a fixed height for the post container */
