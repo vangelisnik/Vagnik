@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Exploratory Data Analysis and Predictive Modeling on the Titanic Dataset</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1" />
+
+    <link rel="stylesheet" type="text/css" href="default.css">
+
+   <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&family=Russo+One&display=swap" rel="stylesheet">
+</head>
+<body>
+		 <div class="nav-wrapper">
+    	  	  	<div class="dots-wrapper">
+    	  		  <div id="dot-1" class="browser-dot
+    	  		  "></div>
+    	  		  <div id="dot-2" class="browser-dot
+    	  		  "></div>
+    	  		  <div id="dot-3" class="browser-dot
+    	  		  "></div>
+    	  		</div>
+                 
+                <u1 id="navigation">
+                   <li><a href="#">Contact</a></li>
+    	  	   </u1>
+    	  	  </div>   
+		
+<div class="main-container">
+	<h1>Exploratory Data Analysis and Predictive Modeling on the Titanic Dataset</h1>
+    
+    <h2>Overview</h2>
+    <p>The Titanic dataset is a classic dataset in the field of data science, containing information about passengers onboard the Titanic, including their demographics, ticket class, fare, cabin, and whether they survived the disaster. In this project, I conducted an exploratory data analysis (EDA) and built predictive models to understand the factors influencing survival and predict passenger survival.</p>
+    
+    <h2>Analysis</h2>
+    <h3>Data Exploration</h3>
+    <p>I started by loading the dataset and exploring its structure. I checked for missing values, examined the distribution of features, and identified potential patterns and correlations.</p>
+    
+    <h3>Data Cleaning</h3>
+    <p>I cleaned the dataset by handling missing values, encoding categorical variables, and removing unnecessary columns. I also performed feature engineering to create new features that might be predictive of survival.</p>
+    
+    <h3>Data Visualization</h3>
+    <p>I visualized the data using various plots such as histograms, bar plots, scatter plots, and correlation matrices. These visualizations helped me gain insights into the relationships between different features and survival.</p>
+    
+    <h3>Model Building</h3>
+    <p>I built predictive models using machine learning algorithms such as logistic regression, decision trees, random forests, and gradient boosting. I trained these models on the training dataset and evaluated their performance using cross-validation.</p>
+    
+    <h3>Model Evaluation</h3>
+    <p>I evaluated the performance of the models using evaluation metrics such as accuracy, precision, recall, and ROC curves. I also compared the performance of different models and selected the best-performing one for making predictions.</p>
+    
+    <h2>Insights</h2>
+    <p>Through my analysis, I gained several insights into the factors influencing survival on the Titanic:</p>
+    <ul>
+        <li>Passengers in higher classes (1st class) had a higher chance of survival compared to those in lower classes.</li>
+        <li>Women and children had a higher survival rate compared to men.</li>
+        <li>Passengers with higher fares or who embarked from certain ports had a higher chance of survival.</li>
+        <li>Having family members onboard (e.g., spouse, siblings, parents, or children) also influenced survival.</li>
+    </ul>
+    
+    <h2>Conclusion</h2>
+    <p>In conclusion, my analysis of the Titanic dataset provided valuable insights into the factors affecting survival. By building predictive models, I was able to predict passenger survival based on their characteristics. This project not only enhanced my understanding of data analysis and machine learning techniques but also demonstrated the importance of exploratory data analysis in deriving meaningful insights from data.</p>
+    <h2>Code Explanation</h2>
+    <h2>This Python code run in JupyterLab performs data loading, preprocessing, model training, evaluation, and prediction on the Titanic dataset.</h2>
+    <h2>This code performs data loading, splitting, visualization, and basic information display for the Titanic dataset, which is essential steps in the exploratory data analysis (EDA) process.</h2>
+  <pre>
+
+import numpy as np 
+import pandas as pd
+import matplotlib.pyplot as plt
+
+
+
+titanic_data=pd.read_csv('train.csv')
+
+
+titanic_data
+
+
+from sklearn.model_selection import StratifiedShuffleSplit
+
+
+split=StratifiedShuffleSplit(n_splits=1,test_size=0.2)
+for train_indices,test_indices in split.split(titanic_data,titanic_data[["Survived","Pclass","Sex"]]):
+    strat_train_set = titanic_data.loc[train_indices]
+    strat_test_set = titanic_data.loc[test_indices]
+    
+
+strat_test_set
+
+    
+plt.subplot(1,2,1)
+strat_train_set['Survived'].hist()
+strat_train_set['Pclass'].hist()
+
+plt.subplot(1,2,2)
+strat_test_set['Survived'].hist()
+strat_test_set['Pclass'].hist()
+
+plt.show()
+
+strat_train_set.info()
+  </pre>
+  <h3>This code defines custom transformers and creates a preprocessing pipeline to handle missing values, encode categorical features, drop unnecessary columns, and standardize numerical features in a dataset.</h3>
+  <pre>from sklearn.base import BaseEstimator, TransformerMixin
+from sklearn.impute import SimpleImputer
+
+class AgeImputer(BaseEstimator,TransformerMixin):
+    def fit(self, X , y=None):
+        return self
+    def transform(self,X):
+        imputer= SimpleImputer(strategy="mean")
+        X['Age'] = imputer.fit_transform(X[['Age']])
+        return X
+
+
+from sklearn.preprocessing import OneHotEncoder
+
+class FeatureEncoder(BaseEstimator, TransformerMixin):
+
+    def fit(self, X, y=None):
+        return self
+
+    def transform(self, X): # Make sure the parameter name matches the method's usage
+        encoder = OneHotEncoder()
+        matrix = encoder.fit_transform(X[['Embarked']]).toarray()
+
+        column_names = ["C", "S", "Q", "N"]
+        
+        for i in range(len(matrix.T)):
+            X[column_names[i]] = matrix.T[i]
+
+        matrix = encoder.fit_transform(X[['Sex']]).toarray()
+        
+        column_names = ["Female", "Male"]
+        
+        for i in range(len(matrix.T)):
+            X[column_names[i]] = matrix.T[i]
+            
+        return X
+
+
+class FeatureDropper(BaseEstimator,TransformerMixin):
+    def fit(self,X,y=None):
+        return self
+    def transform(self,X):
+        return X.drop(["Embarked","Name","Ticket","Cabin","Sex","N"],axis=1,errors="ignore")
+
+
+from sklearn.pipeline import Pipeline
+pipeline = Pipeline([
+    ("ageimputer", AgeImputer()),
+    ("featureencoder", FeatureEncoder()),
+    ("featuredropper", FeatureDropper()),
+    ("scaler", StandardScaler())
+])
+
+
+strat_test_set
+  </pre>
+  <h3>This code snippet effectively trains a Random Forest classifier, tunes its hyperparameters using grid search, selects the best model based on cross-validated performance, and evaluates its accuracy on unseen test data.</h3>
+  <pre>
+
+from sklearn.preprocessing import StandardScaler
+
+X=strat_train_set.drop(['Survived'],axis=1)
+y=strat_train_set['Survived']
+scaler = StandardScaler()
+X_data=scaler.fit_transform(X)
+y_data=y.to_numpy()
+
+
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import GridSearchCV
+
+clf = RandomForestClassifier()
+
+param_grid = [
+    {"n_estimators": [10,100,200,500],"max_depth":[None,5,10],"min_samples_split":[2,3,4]}
+]
+
+grid_search = GridSearchCV(clf,param_grid,cv=3,scoring="accuracy",return_train_score=True)
+grid_search.fit(X_data,y_data)
+
+
+final_clf = grid_search.best_estimator_
+
+
+final_clf
+
+strat_test_set
+
+
+X_test = strat_test_set.drop(['Survived'],axis=1)
+y_test = strat_test_set['Survived']
+
+scaler = StandardScaler()
+X_data_test = scaler.fit_transform(X_test)
+y_data_test = y_test.to_numpy()
+
+
+final_clf.score(X_data_test,y_data_test)
+
+    
+X = titanic_data.drop(['Survived'], axis=1)
+y = titanic_data['Survived']
+
+# Now apply your pipeline to X only
+X_final = pipeline.fit_transform(X)
+# Since y is already separated, no need to apply transformations or drops to it
+y_final = y.to_numpy() 
+
+
+prdo_clf = RandomForestClassifier()
+
+    
+param_grid = [
+    {"n_estimators": [10,100,200,500],"max_depth":[None,5,10],"min_samples_split":[2,3,4]}
+]
+
+    
+grid_search = GridSearchCV(clf,param_grid,cv=3,scoring="accuracy",return_train_score=True)
+grid_search.fit(X_final,y_final)
+
+
+prod_final_clf = grid_search.best_estimator_
+
+
+prod_final_clf
+
+  </pre>
+  <h3>This code snippet loads the test data, prepares it for prediction by applying the same transformations used on the training data, makes predictions using the trained model, and stores the predictions in a CSV file for further analysis.</h3>
+<pre>
+titanic_test_data = pd.read_csv("test.csv")
+
+
+from sklearn.preprocessing import OneHotEncoder, StandardScaler
+import pandas as pd
+
+X_final_test = titanic_test_data
+X_final_test = X_final_test.ffill()  # Forward fill to handle missing values
+
+# Encoding categorical variables
+encoder = OneHotEncoder()  # Using the default parameters
+categorical_cols = ['Sex', 'Embarked']
+encoded_data = encoder.fit_transform(X_final_test[categorical_cols])
+
+# Since the output will be a sparse matrix by default, convert it to a dense format if needed
+encoded_df = pd.DataFrame(encoded_data.toarray(), columns=encoder.get_feature_names_out(), index=X_final_test.index)
+
+X_final_test.drop(columns=categorical_cols, inplace=True)
+X_final_test = pd.concat([X_final_test, encoded_df], axis=1)
+
+# Dropping non-numeric columns
+X_final_test.drop(columns=['Name', 'Ticket', 'Cabin'], inplace=True)
+
+# Apply StandardScaler
+scaler = StandardScaler()
+X_data_final_test = scaler.fit_transform(X_final_test)
+
+
+titanic_test_data
+
+
+final_test_data = pipeline.fit_transform(titanic_test_data)
+
+  
+predictions = prod_final_clf.predict(final_test_data)
+
+  
+final_df = pd.DataFrame(titanic_test_data['PassengerId'])
+final_df['Survived'] = predictions
+final_df.to_csv("predictions.csv",index=False)
+
+final_df
+</pre>
+</div>
+</body>
+</html>
