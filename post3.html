@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Credit Card Fraud Detection</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1" />
+
+    <link rel="stylesheet" type="text/css" href="default.css">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&family=Russo+One&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="nav-wrapper">
+        <div class="dots-wrapper">
+            <div id="dot-1" class="browser-dot"></div>
+            <div id="dot-2" class="browser-dot"></div>
+            <div id="dot-3" class="browser-dot"></div>
+        </div>
+                 
+        <ul id="navigation">
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </div>   
+
+    <div class="main-container">
+        <h1>Building a Machine Learning Model for Credit Card Fraud Detection</h1>
+        <p>I developed a machine learning model to accurately identify fraudulent transactions among credit card transactions. This project involved preprocessing a dataset of credit card transactions, selecting features, splitting the data into training and testing sets, and then training a model to distinguish between fraudulent and legitimate transactions.</p>
+
+        <p>This code snippet provides a basic framework for fraud detection modeling, demonstrating data preparation, model training, prediction, and evaluation phases.</p>
+        <p>Here is the code used in this project:</p>
+        
+<pre>
+# In[16]:
+
+
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
+from sklearn.model_selection import GridSearchCV
+
+
+# In[2]:
+
+
+credit_data = pd.read_csv('creditcard.csv')
+
+
+# In[3]:
+
+
+credit_data
+
+
+# In[32]:
+
+
+Normal = credit_data[credit_data.Class==0]
+Fraud = credit_data[credit_data.Class==1]
+(Normal.shape),(Fraud.shape)
+
+
+# In[5]:
+
+
+duplicated_values = credit_data[credit_data.duplicated()]
+duplicated_values
+
+
+# In[6]:
+
+
+credit_data_copy=credit_data.copy()
+
+
+# In[7]:
+
+
+credit_data_copy
+
+
+# In[9]:
+
+
+X = credit_data_copy.drop(['Class'], axis=1)
+y = credit_data_copy['Class']
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+
+# In[10]:
+
+
+X.drop('Time', axis = 1, inplace=True)
+X.drop('Amount', axis = 1, inplace=True)
+
+
+# In[11]:
+
+
+X
+
+
+# In[12]:
+
+
+X.describe()
+
+
+# In[14]:
+
+
+import seaborn as sns
+import matplotlib.pyplot as plt
+corr= round(credit_data.corr(),3)
+plt.figure(figsize=(20,14))
+sns.set(font_scale=0.8)
+sns.heatmap(corr, cmap = 'Spectral', annot = True)
+plt.show()
+
+
+# In[15]:
+
+
+X.info()
+
+
+# In[18]:
+
+
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
+
+
+# In[19]:
+
+
+model = RandomForestClassifier()
+param_grid = [
+    {"n_estimators": [10,100,200],"max_depth":[None,5,10],"min_samples_split":[2,3,4]}
+]
+grid_search = GridSearchCV(model,param_grid,cv=3,scoring="accuracy",return_train_score=True)
+grid_search.fit(X_train_scaled, y_train)
+
+best_params = grid_search.best_params_
+print("Best Parameters:", best_params)
+
+
+# In[20]:
+
+
+# Evaluate the model with the best parameters
+best_model = grid_search.best_estimator_
+accuracy = best_model.score(X_test_scaled, y_test)
+print("Accuracy with best model:", accuracy)
+
+
+# In[27]:
+
+
+from sklearn.metrics import accuracy_score, auc, balanced_accuracy_score, confusion_matrix, f1_score, precision_score, average_precision_score, roc_auc_score,  recall_score,  precision_recall_curve 
+from sklearn.model_selection import cross_val_score, cross_val_predict, cross_validate, train_test_split
+cvs = cross_val_score(best_model,X=X_train, y=y_train, scoring='average_precision')
+print(f'Using {len(cvs)} trials:\n {cvs}')
+
+
+# In[29]:
+
+
+import numpy as np 
+print(f'Average:{np.mean(cvs)}')
+
+
+# In[34]:
+
+
+y_pred=best_model.predict(X_test_scaled)
+cm_LR = confusion_matrix(y_test, y_pred)
+LABELS = ['Legal', 'Fraud']
+plt.figure(figsize=(4, 4))
+sns.set(font_scale=1.1)
+sns.heatmap(cm_LR, xticklabels=LABELS, cmap = 'Spectral', yticklabels=LABELS, annot=True, fmt='d')
+plt.title('Transactions')
+plt.ylabel('True class')
+plt.xlabel('Predicted class')
+plt.show()
+
+
+# In[37]:
+
+
+print(classification_report(y_test,y_pred,digits=4))
+
+
+# In[38]:
+
+
+submission_df = pd.DataFrame({
+    'Class': y_pred,        # Predicted classes
+    'Amount': X_test['Amount']  # Assuming 'Amount' is one of the features
+})
+submission_df.to_csv('submission.csv', index=False)
+
+
+# In[39]:
+
+
+fraud_submission_df = submission_df[submission_df['Class'] == 1]
+fraud_submission_df.to_csv('fraud_submission.csv', index=False)
+
+
+# In[42]:
+
+
+predicted_class_counts = pd.Series(y_pred).value_counts()
+print(predicted_class_counts)
+num_predicted_frauds = predicted_class_counts[1]
+print("Number of predicted frauds given that the test set is 20%:", num_predicted_frauds)
+</pre>
+    </div>
+</body>
+</html>
