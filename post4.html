@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Basketball Stats Analysis</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1" />
+
+    <link rel="stylesheet" type="text/css" href="default.css">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&family=Russo+One&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="nav-wrapper">
+        <div class="dots-wrapper">
+            <div id="dot-1" class="browser-dot"></div>
+            <div id="dot-2" class="browser-dot"></div>
+            <div id="dot-3" class="browser-dot"></div>
+        </div>
+                 
+        <ul id="navigation">
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </div>   
+
+    <div class="main-container">
+        <h1>Analyzing Basketball Stats with Data Science</h1>
+        <h2>Context</h2>
+        <p>In project inspired by "Space Jam: A New Legacy," I used Python, Pandas, and Jupyter Lab to analyze basketball stats, employed machine learning to handle missing data and identified bimodal data among human and Tune Squad players.</p>
+        <h2>Data Overview</h2>
+        <p>The dataset encompasses a wide array of basketball statistics, ranging from player performance metrics to team-based analytics.</p>
+        <h2>Code Overview:</h2>
+        <p>This code snippet outlines the fundamental steps involved in basketball stats analysis:</p>
+        
+<pre>
+  # In[2]:
+
+
+import pandas as pd
+
+
+# In[3]:
+
+
+player_df=pd.read_csv('player_data.csv')
+
+
+# In[4]:
+
+
+player_df
+
+
+# In[5]:
+
+
+player_df.head()
+
+
+# In[6]:
+
+
+player_df.info()
+
+
+# In[7]:
+
+
+player_df.dropna(axis='columns',inplace=True,how='all')
+
+
+# In[8]:
+
+
+player_df.info()
+
+
+# In[9]:
+
+
+player_df.dropna(inplace=True,how='all')
+
+
+# In[10]:
+
+
+player_df.info()
+
+
+# In[11]:
+
+
+player_df
+
+
+# In[14]:
+
+
+player_df.dropna(inplace=True,thresh=12) # more than 2 NaN values get Dropped
+
+
+# In[59]:
+
+
+player_df.reset_index(drop=True,inplace=True)
+
+
+# In[60]:
+
+
+player_df.info()
+
+
+# In[61]:
+
+
+import seaborn as sns
+plt.hist(player_df['PER'],density=True,bins=15)
+plt.title('PER Histogram')
+sns.kdeplot(player_df['PER']);
+
+
+# In[62]:
+
+
+import seaborn as sns
+plt.hist(player_df['MPG'],density=True,bins=15)
+plt.title('MPG Histogram')
+sns.kdeplot(player_df['MPG']);
+
+
+# In[63]:
+
+
+import seaborn as sns
+plt.hist(player_df['GP'],density=True,bins=15)
+plt.title('GP Histogram')
+sns.kdeplot(player_df['GP']);
+
+
+# In[64]:
+
+
+player_df[['GP','MPG']] = player_df[['GP','MPG']].fillna(value=player_df[['GP','MPG']].mean())
+player_df.info()
+
+
+# In[71]:
+
+
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import r2_score
+from sklearn.model_selection import cross_val_score
+import matplotlib.pyplot as plt
+
+X=player_df.dropna(how='any').iloc[:,5:-1].to_numpy()
+y=player_df.dropna(how='any')['PER']
+
+lin_reg=LinearRegression()
+
+scores=cross_val_score(lin_reg,X,y,cv=10,scoring='r2')
+
+entries,bin_edges,patches = plt.hist(scores,bins=10)
+
+print('Mean r2 score: {:.4f}'.format(scores.mean()))
+
+
+# In[72]:
+
+
+lin_reg.fit(X,y)
+
+
+# In[73]:
+
+
+mask = player_df.isnull().any(axis=1)
+mask
+
+
+# In[74]:
+
+
+player_df.loc[mask].iloc[:,5:-1]
+
+
+# In[79]:
+
+
+player_df.loc[mask,'PER'] = lin_reg.predict(player_df.loc[mask].iloc[:,5:-1])
+
+
+# In[80]:
+
+
+player_df.info()
+
+
+# In[81]:
+
+
+pop_list=[]
+
+for id in player_df['ID']:
+    if id <=30:
+        pop_list.append('player'+str(id))
+    else:
+        pop_list.append('tune_squad'+str(id%30))
+
+pop_list
+
+
+# In[82]:
+
+
+player_df['player'] = pop_list
+
+
+# In[83]:
+
+
+player_df.head()
+
+
+# In[84]:
+
+
+#putting player as 2nd column
+column_list = list(player_df.iloc[:,:-1])
+column_list.insert(1,'player')
+player_df = player_df[column_list]
+player_df.head()
+
+
+# In[85]:
+
+
+player_df
+
+
+# In[86]:
+
+
+player_df.info()
+
+
+# In[87]:
+
+
+player_df.describe()
+
+
+# In[94]:
+
+
+player_df['GP'] = player_df['GP'].round(2)
+player_df['MPG'] = player_df['MPG'].round(2)
+player_df['PER'] = player_df['PER'].round(2)
+
+
+# In[95]:
+
+
+player_df.to_csv('Player_data_final.csv',index=False)
+</pre>
+    </div>
+</body>
+</html>
