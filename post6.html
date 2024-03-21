@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rise in Sea Level Analysis</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1" />
+    <link rel="stylesheet" type="text/css" href="default.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&family=Russo+One&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="nav-wrapper">
+        <div class="dots-wrapper">
+            <div id="dot-1" class="browser-dot"></div>
+            <div id="dot-2" class="browser-dot"></div>
+            <div id="dot-3" class="browser-dot"></div>
+        </div>
+        <ul id="navigation">
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </div>
+
+    <div class="main-container">
+        <h1>Exploring Sea Level Trends</h1>
+        <h2>Project Overview</h2>
+        <p>This project aims to analyze and visualize historical and recent trends in sea level rise using Python and statistical techniques.</p>
+        <h2>Data Synopsis</h2>
+        <p>The dataset 'epa-sea-level.csv' contains records of sea level measurements over time, facilitating the examination of trends and patterns.</p>
+        <h2>Code Synopsis:</h2>
+        <p>The following code demonstrates the process of analyzing and visualizing sea level data:</p>
+        
+<pre>
+import pandas as pd
+import matplotlib.pyplot as plt
+from scipy.stats import linregress
+
+def draw_plot():
+    
+    df = pd.read_csv('epa-sea-level.csv')
+
+    
+    plt.figure(figsize=(10, 6))
+    plt.scatter(df['Year'], df['CSIRO Adjusted Sea Level'], alpha=0.7, label='Original Data')
+
+    
+    slope, intercept, r_value, p_value, std_err = linregress(df['Year'], df['CSIRO Adjusted Sea Level'])
+
+    
+    x_pred = list(range(1880, 2051))
+    y_pred = [slope * x + intercept for x in x_pred]
+    plt.plot(x_pred, y_pred, color='red', label='Line of Best Fit (1880-2013)')
+
+    
+    df_recent = df[df['Year'] >= 2000]
+
+    
+    slope_recent, intercept_recent, _, _, _ = linregress(df_recent['Year'], df_recent['CSIRO Adjusted Sea Level'])
+
+    
+    x_pred_recent = list(range(2000, 2051))
+    y_pred_recent = [slope_recent * x + intercept_recent for x in x_pred_recent]
+    plt.plot(x_pred_recent, y_pred_recent, color='green', label='Line of Best Fit (2000-2013)')
+
+    
+    plt.xlabel('Year')
+    plt.ylabel('Sea Level (inches)')
+    plt.title('Rise in Sea Level')
+
+    
+    plt.legend()
+
+    
+    plt.savefig('sea_level_plot.png')
+    plt.show()
+
+   
+    return plt.gca().get_figure()
+
+draw_plot()
+</pre>
+    </div>
+</body>
+</html>
