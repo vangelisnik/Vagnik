@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Crime Data Analysis 2021</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1" />
+    <link rel="stylesheet" type="text/css" href="default.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&family=Russo+One&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="nav-wrapper">
+        <div class="dots-wrapper">
+            <div id="dot-1" class="browser-dot"></div>
+            <div id="dot-2" class="browser-dot"></div>
+            <div id="dot-3" class="browser-dot"></div>
+        </div>
+        <ul id="navigation">
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </div>
+
+    <div class="main-container">
+        <h1>Insights into 2021 Crime Trends</h1>
+        <h2>Project Overview</h2>
+        <p>This project delves into the analysis of crime data throughout 2021, employing Python and data visualization techniques.</p>
+        <h2>Data Synopsis</h2>
+        <p>The data set contains detailed records of criminal activities, including the time, nature, and demographics of the defendants.</p>
+        <h2>Code Synopsis:</h2>
+        <p>The following code blocks outline the steps taken to clean, analyze, and visualize the crime data set:</p>
+        
+<pre>
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Read the crime data from the CSV file
+crime = pd.read_csv('crime_data.csv')
+crime 
+
+# Display descriptive statistics of the dataset
+crime.describe()
+
+# Display information about the dataset
+crime.info()
+
+# Grouping by defendant sex to analyze the distribution
+sex = crime.groupby('Defendant Sex').size().reset_index(name = 'Numbers')
+sex
+
+# Plotting the distribution of defendant sex
+plt.figure(figsize=(10, 8))
+plt.xlabel('Defendant Sex')
+plt.ylabel('Numbers')
+x=sex['Defendant Sex']
+y=sex['Numbers']
+plt.bar(x,y)
+
+# Grouping by arrest category to analyze the distribution
+category = crime.groupby('Arrest Category').size().reset_index(name = 'Numbers')
+category 
+
+# Sorting the arrest categories by the number of occurrences
+category_sorted = category.sort_values(by='Numbers', ascending=False)
+category_sorted
+
+# Plotting the distribution of arrest categories
+plt.figure(figsize=(20,16)) 
+category_sorted.plot(kind='pie', y='Numbers', labels=category_sorted['Arrest Category'], autopct='%1.1f%%',startangle=90, counterclock=False)
+plt.title('Category Distribution')
+plt.ylabel('')
+plt.legend(loc='center left', bbox_to_anchor=(2,1))
+plt.show()
+
+# Grouping by defendant age to analyze the distribution
+age = crime.groupby('Age').size().reset_index(name = 'Numbers')
+age
+
+# Plotting the distribution of defendant age
+plt.figure(figsize=(10, 8))
+plt.xlabel('Defendant Age')
+plt.ylabel('Numbers')
+x=age['Age']
+y=age['Numbers']
+plt.bar(x,y)
+
+# Checking for anomalies in defendant ages and removing them
+crime_min=crime['Age'].min()
+crime_max=crime['Age'].max()
+q_1=crime['Age'].quantile(0.25)
+q_3=crime['Age'].quantile(0.75)
+iqr=q_3-q_1
+lower = q_1 - 1.5*iqr
+higher = q_3 + 1.5*iqr
+higher_array = np.where(crime['Age'] >=  higher)[0]
+print("Size:", higher_array.size)
+lower_array = np.where(crime['Age'] <= lower)[0]
+print("Size:", lower_array.size)
+# Now we want to drop the values 
+crime.drop(index = lower_array,inplace=True) 
+crime.drop(index = higher_array,inplace=True) 
+
+# Display updated information about the dataset after removing anomalies
+crime.info()
+
+# Display updated descriptive statistics of the dataset after removing anomalies
+crime.describe()
+</pre>
+    </div>
+</body>
+</html>
