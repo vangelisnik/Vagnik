@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smoking Data Analysis</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1" />
+    <link rel="stylesheet" type="text/css" href="default.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&family=Russo+One&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="nav-wrapper">
+        <div class="dots-wrapper">
+            <div id="dot-1" class="browser-dot"></div>
+            <div id="dot-2" class="browser-dot"></div>
+            <div id="dot-3" class="browser-dot"></div>
+        </div>
+        <ul id="navigation">
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </div>
+
+    <div class="main-container">
+        <h1>Exploring Smoking Data</h1>
+        <h2>Project Overview</h2>
+        <p>This project delves into the analysis and visualization of smoking data using Python.</p>
+        <h2>Data Synopsis</h2>
+        <p>The dataset 'smoking.csv' contains records of individuals' smoking habits, including gender, age, income levels, and marital status, to facilitate examining trends and behaviors.</p>
+        <h2>Code Synopsis:</h2>
+        <p>The following code demonstrates the process of analyzing and visualizing smoking data. It includes data cleaning, transformation, and visualization through pie charts and pattern exploration:</p>
+        
+<div class="code-and-image">
+    <pre>     
+import numpy as np 
+import pandas as pd
+import matplotlib as plt
+from jinja2 import Template
+
+smoking = pd.read_csv('smoking.csv')
+
+smoking 
+    </pre>
+    <img src="1st_smoke.png" />
+</div>
+<div class="code-and-image">
+    <pre>     
+def income(cell):
+    income={
+       '2,600 to 5,200':3900,
+        'Under 2,600':2500,
+        '28,600 to 36,400':32000,
+        '5,200 to 10,400':8000,
+        'Refused':None,
+        '20,800 to 28,600':25000,
+        'Unknown':None,
+        '10,400 to 15,600':13000
+    }
+    
+    return income.get(cell)
+
+ smoking['income']=smoking['gross_income'].apply(income)
+      
+ smoking
+    </pre>
+    <img src="2nd_smoke.png" />
+</div>
+<div class="code-and-image">
+    <pre>     
+def smoking_rates(smoking, column_name='smoke'):
+ 
+    value_counts = smoking[column_name].value_counts()
+    total = value_counts.sum()
+    
+    yes_count = value_counts.get('Yes', 0)
+    no_count = value_counts.get('No', 0)
+    
+    rate_yes = (yes_count / total) * 100 if total > 0 else 0
+    rate_no = (no_count / total) * 100 if total > 0 else 0
+    
+    return rate_yes, rate_no
+
+yes_rate, no_rate = smoking_rates(smoking, 'smoke')
+      
+yes_rate,no_rate
+      
+gender=smoking.groupby(by=["gender","smoke"]).count()
+      
+gender
+    </pre>
+    <img src="3rd_smoke.png" />
+</div>
+<div class="code-and-image">
+    <pre>     
+male_smoking = smoking[smoking['gender'] == 'Male']
+count_m=male_smoking['smoke'].value_counts()
+count_m.plot.pie()
+
+yes_rate_m, no_rate_m = smoking_rates(male_smoking, 'smoke')
+yes_rate_m,no_rate_m
+    </pre>
+    <img src="4th_smoke.png" />
+</div>
+<div class="code-and-image">
+    <pre>     
+female_smoking = smoking[smoking['gender'] == 'Female']
+count_f=female_smoking['smoke'].value_counts()
+count_f.plot.pie()
+
+yes_rate_f, no_rate_f = smoking_rates(female_smoking, 'smoke')
+yes_rate_f,no_rate_f
+    </pre>
+    <img src="5th_smoke.png" />
+</div>
+<div class="code-and-image">
+    <pre>     
+def majority_smoking_status(group):
+    counts = group['smoke'].value_counts()
+    majority_status = 'Yes' if counts.get('Yes', 0) > counts.get('No', 0) else 'No'
+    return majority_status
+      
+smoking_rates_by_marital = smoking.groupby('marital_status').apply(majority_smoking_status).reset_index(name='Smoking_Rate')
+
+smoking_rates_by_marital           
+    </pre>
+    <img src="6th_smoke.png" />
+</div>
+<div class="code-and-image">
+    <pre>     
+Marital = smoking.groupby('marital_status').mean(numeric_only=True)
+
+Marital = Marital.merge(smoking_rates_by_marital, on='marital_status')
+
+Marital.sort_values(by='age').style.background_gradient(cmap="summer")
+    </pre>
+    <img src="7th_smoke.png" />
+</div>
+<div class="code-and-image">
+    <pre>     
+smoking.fillna(0)
+    </pre>
+    <img src="8th_smoke.png" />
+</div>
+<div class="code-and-image">
+    <pre>     
+filtered_smoking = smoking.loc[(smoking['age']>20) & (smoking['age']<30)] 
+filtered_smoking
+    </pre>
+    <img src="9th_smoke.png" />
+</div>
+<div class="code-and-image">
+    <pre>     
+def most_common_smoke(x):
+    counts = x.value_counts()
+    if len(counts) > 1 and counts.iloc[0] == counts.iloc[1]:
+        return 'no'  
+    else:
+        return counts.idxmax()
+
+result = filtered_smoking.groupby('age')['smoke'].apply(most_common_smoke).reset_index(name='Most Common')
+
+result
+    </pre>
+    <img src="10th_smoke.png" />
+</div>
