@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>United States GDP Analysis</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="nav-wrapper">
+        <div class="dots-wrapper">
+            <div id="dot-1" class="browser-dot"></div>
+            <div id="dot-2" class="browser-dot"></div>
+            <div id="dot-3" class="browser-dot"></div>
+        </div>
+        <ul id="navigation">
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </div>
+
+    <div class="main-container">
+        <h1>United States GDP Analysis</h1>
+        <h2>Project Overview</h2>
+        <p>This project aims to visualize the GDP (Gross Domestic Product) trend of the United States over time.</p>
+        <h2>Data Synopsis</h2>
+        <p>The dataset contains records of the GDP of the United States over time, facilitating the examination of economic trends and patterns.</p>
+        <h2>Code Synopsis:</h2>
+        <p>The following code demonstrates the process of analyzing and visualizing GDP data with JS and D3 Library:</p>
+        <p>HTML CODE:</p>
+      <pre>
+        <!DOCTYPE html>
+<html>
+<head>
+    <title>United States GDP</title>
+    <script src="https://d3js.org/d3.v6.min.js"></script> 
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        #title {
+            font-size: 2.5rem; 
+            color: black;
+        }
+        #tooltip {
+            position: absolute;
+            text-align: center;
+            width: auto;
+            height: auto;
+            padding: 2px;
+            font-size: 12px;
+            background: lightsteelblue;
+            border: 0;
+            border-radius: 8px;
+            pointer-events: none;
+            opacity: 0;
+        }
+        .text-container {
+            z-index: 10;
+            position: relative; 
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="title">United States GDP</div>
+        <div id="chart"></div>
+        <div id="tooltip" style="opacity: 0;"></div>
+        <svg>
+            <defs>
+                <linearGradient id="bar-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" style="stop-color:rgb(51,173,255);stop-opacity:1" /> 
+                    <stop offset="100%" style="stop-color:rgb(0,0,128);stop-opacity:1" /> 
+                </linearGradient>
+            </defs>
+        </svg>
+        <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
+    </div>
+</body>
+</html>
+    </pre>
+     <p>JS CODE:</p>
+    <pre>
+      const parseTime = d3.utcParse("%Y-%m-%d");
+const formatTime = d3.timeFormat("%B %d, %Y");
+
+const data = originalData.map(d => ({
+    date: parseTime(d[0]),
+    gdp: d[1]
+}));
+
+const margin = { top: 20, right: 20, bottom: 30, left: 50 };
+const width = 900;
+const height = 460;
+
+const barWidth = width / data.length;
+
+const svg = d3.select("#chart")
+    .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform", `translate(${margin.left},${margin.top})`);
+
+const xScale = d3.scaleTime()
+    .domain(d3.extent(data, d => d.date))
+    .range([0, width]);
+
+const yScale = d3.scaleLinear()
+    .domain([0, d3.max(data, d => d.gdp)])
+    .range([height, 0]);
+
+const tooltip = d3.select("#tooltip");
+
+svg.append("g")
+    .attr("id", "x-axis")
+    .attr("transform", `translate(0, ${height})`)
+    .call(d3.axisBottom(xScale));
+
+svg.append("g")
+    .attr("id", "y-axis")
+    .call(d3.axisLeft(yScale));
+
+svg.append("text")
+    .attr("id", "title")
+    .attr("x", width / 2)
+    .attr("y", 0 - (margin.top / 2))
+    .attr("text-anchor", "middle");
+
+svg.selectAll(".bar")
+    .data(data)
+    .enter()
+    .append("rect")
+    .attr("class", "bar")
+    .attr("x", d => xScale(d.date))
+    .attr("y", d => yScale(d.gdp))
+    .attr("width", barWidth)
+    .attr("fill", "url(#bar-gradient)")
+    .attr("height", d => height - yScale(d.gdp))
+    .attr("data-date", d => d.date.toISOString().split('T')[0])
+    .attr("data-gdp", d => d.gdp);
+
+svg.selectAll(".bar")
+    .on("mouseover", function(event, d) {
+        tooltip
+            .style("opacity", 0.9)
+            .html(`Date: ${formatTime(d.date)}<br>GDP: $${d.gdp} Billion`)
+            .style("left", (event.pageX + 5) + "px")
+            .style("top", (event.pageY - 28) + "px")
+            .attr("data-date", d.date.toISOString().split('T')[0]);
+    })
+    .on("mouseout", function() {
+        tooltip
+            .style("opacity", 0)
+            .attr("data-date", "");
+    });
+    </pre>
+    </div>
+</body>
+</html>
