@@ -29,10 +29,10 @@
     <div class="main-container">
         <h1>SQL Injection Attack</h1>
         <h2>Project Overview</h2>
-        <p>Analyzing Timestamps and Generating Binary Flags</p>
+        <p>Analyzing Timestamps and Generating Admin Password</p>
         <h2>Project Components:</h2>
         <p>Data Extraction:
-The project begins by reading the contents of the "asc.txt" file to extract timestamps. These timestamps are assumed to be enclosed within square brackets in each line of the file.
+The project begins by reading the contents of the "timestamps.txt" file to extract timestamps. These timestamps are assumed to be enclosed within square brackets in each line of the file.
 Timestamp Parsing:
 Each extracted timestamp is then parsed to extract the time component, specifically hours, minutes, and seconds.
 Time Difference Calculation:
@@ -47,13 +47,13 @@ Additionally, after every set of four timestamps, an extra binary digit is added
 If the time difference is 2 seconds, '0' is added.
 If the time difference is 4 seconds, '1' is added.
 Flag Interpretation:
-The generated binary flags are then converted into ASCII characters. These characters might encode information or serve as identifiers for specific events or states.</p>
+The generated binary flags are then converted into ASCII characters. These characters are the password of the Administrator</p>
         <h2>Potential Applications:</h2>
-        <p>This project's output could be utilized in various applications such as event logging, system monitoring, or data analysis where understanding the time intervals between events is crucial.
-        The binary flags could be integrated into a larger system for further processing or used as indicators for specific actions or conditions.</p>
+        <p>The project's findings enable the implementation of enhanced security measures, facilitating proactive identification and mitigation of potential threats.
+Insights gained through timestamp analysis inform the development of robust authentication protocols, safeguarding sensitive information from unauthorized access.</p>
         <p>timestamps.txt</p>
       <pre>
-  82.165.152.127 - - [30/Mar/2024:12:12:54]
+82.165.152.127 - - [30/Mar/2024:12:12:54]
 82.165.152.127 - - [30/Mar/2024:12:13:00]
 82.165.152.127 - - [30/Mar/2024:12:13:00]
 82.165.152.127 - - [30/Mar/2024:12:13:06]
@@ -270,7 +270,7 @@ for i in range(len(timeList)-1):
         char = ''
 print(flag)
 </pre>
-<p>Final Password: </p>
+<p>Admin Password: g9UWD8EZgBhBpc4nTSAS </p>
     </div>
 </body>
 </html>
