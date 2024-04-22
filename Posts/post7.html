@@ -44,7 +44,7 @@ smoking = pd.read_csv('smoking.csv')
 
 smoking 
     </pre>
-    <img src="Vagnik/Images/1st_smoke.png" />
+    <img src="../Images/1st_smoke.png" />
 </div>
 <div class="code-and-image">
     <pre>     
@@ -66,7 +66,7 @@ def income(cell):
       
  smoking
     </pre>
-    <img src="Vagnik/Images/2nd_smoke.png" />
+    <img src="../Images/2nd_smoke.png" />
 </div>
 <div class="code-and-image">
     <pre>     
@@ -91,7 +91,7 @@ gender=smoking.groupby(by=["gender","smoke"]).count()
       
 gender
     </pre>
-    <img src="Vagnik/Images/3rd_smoke.png" />
+    <img src="../Images/3rd_smoke.png" />
 </div>
 <div class="code-and-image">
     <pre>     
@@ -102,7 +102,7 @@ count_m.plot.pie()
 yes_rate_m, no_rate_m = smoking_rates(male_smoking, 'smoke')
 yes_rate_m,no_rate_m
     </pre>
-    <img src="Vagnik/Images/4th_smoke.png" />
+    <img src="../Images/4th_smoke.png" />
 </div>
 <div class="code-and-image">
     <pre>     
@@ -113,7 +113,7 @@ count_f.plot.pie()
 yes_rate_f, no_rate_f = smoking_rates(female_smoking, 'smoke')
 yes_rate_f,no_rate_f
     </pre>
-    <img src="Vagnik/Images/5th_smoke.png" />
+    <img src="../Images/5th_smoke.png" />
 </div>
 <div class="code-and-image">
     <pre>     
@@ -126,7 +126,7 @@ smoking_rates_by_marital = smoking.groupby('marital_status').apply(majority_smok
 
 smoking_rates_by_marital           
     </pre>
-    <img src="Vagnik/Images/6th_smoke.png" />
+    <img src="../Images/6th_smoke.png" />
 </div>
 <div class="code-and-image">
     <pre>     
@@ -136,20 +136,20 @@ Marital = Marital.merge(smoking_rates_by_marital, on='marital_status')
 
 Marital.sort_values(by='age').style.background_gradient(cmap="summer")
     </pre>
-    <img src="Vagnik/Images/7th_smoke.png" />
+    <img src="../Images/7th_smoke.png" />
 </div>
 <div class="code-and-image">
     <pre>     
 smoking.fillna(0)
     </pre>
-    <img src="Vagnik/Images/8th_smoke.png" />
+    <img src="../Images/8th_smoke.png" />
 </div>
 <div class="code-and-image">
     <pre>     
 filtered_smoking = smoking.loc[(smoking['age']>20) & (smoking['age']<30)] 
 filtered_smoking
     </pre>
-    <img src="Vagnik/Images/9th_smoke.png" />
+    <img src="../Images/9th_smoke.png" />
 </div>
 <div class="code-and-image">
     <pre>     
@@ -164,5 +164,5 @@ result = filtered_smoking.groupby('age')['smoke'].apply(most_common_smoke).reset
 
 result
     </pre>
-    <img src="Vagnik/Images/10th_smoke.png" />
+    <img src="../Images/10th_smoke.png" />
 </div>
