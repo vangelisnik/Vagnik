@@ -27,30 +27,42 @@
     </div>   
 
     <div class="main-container">
-        <h1>SQL Injection Attack</h1>
-        <h2>Project Overview</h2>
-        <p>Analyzing Timestamps and Generating Admin Password</p>
-        <h2>Project Components:</h2>
-        <p>Data Extraction:
-The project begins by reading the contents of the "timestamps.txt" file to extract timestamps. These timestamps are assumed to be enclosed within square brackets in each line of the file.
-Timestamp Parsing:
-Each extracted timestamp is then parsed to extract the time component, specifically hours, minutes, and seconds.
-Time Difference Calculation:
-The time differences between consecutive timestamps are calculated to understand the time intervals between events.
-Binary Flag Generation:
-Based on the time differences, binary flags are generated. The generation of these flags follows specific rules:
-If the time difference is 0 seconds, '00' is added to the binary flag.
-If the time difference is 2 seconds, '01' is added to the binary flag.
-If the time difference is 4 seconds, '10' is added to the binary flag.
-If the time difference is 6 seconds, '11' is added to the binary flag.
-Additionally, after every set of four timestamps, an extra binary digit is added:
-If the time difference is 2 seconds, '0' is added.
-If the time difference is 4 seconds, '1' is added.
-Flag Interpretation:
-The generated binary flags are then converted into ASCII characters. These characters are the password of the Administrator</p>
-        <h2>Potential Applications:</h2>
-        <p>The project's findings enable the implementation of enhanced security measures, facilitating proactive identification and mitigation of potential threats.
-Insights gained through timestamp analysis inform the development of robust authentication protocols, safeguarding sensitive information from unauthorized access.</p>
+       <h1>SQL Injection Attack</h1>
+    
+    <h2>Project Overview</h2>
+    <p>Analyzing Timestamps and Generating Admin Password</p>
+    
+    <h2>Project Components:</h2>
+    
+    <p>Data Extraction:</p>
+    <p>The project begins by reading the contents of the "timestamps.txt" file to extract timestamps. These timestamps are assumed to be enclosed within square brackets in each line of the file.</p>
+    
+    <p>Timestamp Parsing:</p>
+    <p>Each extracted timestamp is then parsed to extract the time component, specifically hours, minutes, and seconds.</p>
+    
+    <p>Time Difference Calculation:</p>
+    <p>The time differences between consecutive timestamps are calculated to understand the time intervals between events.</p>
+    
+    <p>Binary Flag Generation:</p>
+    <p>Based on the time differences, binary flags are generated. The generation of these flags follows specific rules:
+        <ul>
+            <li>If the time difference is 0 seconds, '00' is added to the binary flag.</li>
+            <li>If the time difference is 2 seconds, '01' is added to the binary flag.</li>
+            <li>If the time difference is 4 seconds, '10' is added to the binary flag.</li>
+            <li>If the time difference is 6 seconds, '11' is added to the binary flag.</li>
+        </ul>
+        Additionally, after every set of four timestamps, an extra binary digit is added:
+        <ul>
+            <li>If the time difference is 2 seconds, '0' is added.</li>
+            <li>If the time difference is 4 seconds, '1' is added.</li>
+        </ul>
+    </p>
+    
+    <p>Flag Interpretation:</p>
+    <p>The generated binary flags are then converted into ASCII characters. These characters are the password of the Administrator</p>
+    
+    <h2>Potential Applications:</h2>
+    <p>The project's findings enable the implementation of enhanced security measures, facilitating proactive identification and mitigation of potential threats. Insights gained through timestamp analysis inform the development of robust authentication protocols, safeguarding sensitive information from unauthorized access.</p>
         <p>timestamps.txt</p>
       <pre>
 82.165.152.127 - - [30/Mar/2024:12:12:54]
