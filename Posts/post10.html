@@ -161,7 +161,7 @@ binwidth = 5
 
 # Define colors with varying lightness
 colors = plt.cm.get_cmap('Reds', 5)
-colors = [colors(i) for i in np.linspace(0.2,1, 5)] 
+colors = [colors(i) for i in np.linspace(0.1,1, 5)] 
 colors.reverse()
 # Create histogram
 plt.hist([heart1_disease_patients, heart2_disease_patients, heart3_disease_patients, heart4_disease_patients, heart5_disease_patients], bins=range(min(df['age']), max(df['age']) + binwidth, binwidth), stacked=True, label=['Heart Disease 4', 'Heart Disease 3', 'Heart Disease 2', 'Heart Disease 1', 'No Heart Disease'], color=colors)
